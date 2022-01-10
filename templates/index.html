@@ -179,7 +179,12 @@
   <script>
     const form = document.getElementById("form");
     const submitButton = document.getElementById("submit");
+    const abstract = document.getElementById("abstract");
     form.onsubmit = () => {
+      if (abstract.value.length > 512) {
+        alert("摘要不能超过512字");
+        return false;
+      }
       submitButton.innerText = "请稍等片刻";
       submitButton.setAttribute("disabled", true);
       return true;
