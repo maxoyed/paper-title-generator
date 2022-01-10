@@ -68,16 +68,22 @@
     textarea {
       margin-top: 1em;
       border-radius: 0.2em;
-      width: 600px;
-      height: 300px;
-      box-sizing: border-box;
+      width: 580px;
+      height: 280px;
+      /* box-sizing: border-box; */
       padding: 0.5em;
       font-size: 1.2em;
       line-height: 1.5em;
+      resize: none;
     }
 
     #abstract {
       border: 1px solid #6c757d;
+    }
+
+    #title {
+      text-align: center;
+      line-height: 280px;
     }
 
     button {
@@ -98,6 +104,11 @@
       background-color: #007bf1;
     }
 
+    button[disabled] {
+      background-color: #6c757d;
+      cursor: wait;
+    }
+
     svg {
       width: 20px;
       height: 20px;
@@ -112,7 +123,7 @@
 </head>
 
 <body>
-  <form class="container flex-col" action="/text_gen" method="post">
+  <form id="form" class="container flex-col" action="/text_gen" method="post">
     <div class="row">
       <header>自然语言处理黑科技：输入论文摘要，AI自动生成论文标题</header>
     </div>
@@ -134,11 +145,12 @@
         {% if abstract %}
         <textarea name="abstract" id="abstract" cols="30" rows="10">{{abstract}}</textarea>
         {% else %}
-        <textarea name="abstract" id="abstract" cols="30" rows="10"></textarea>
+        <textarea name="abstract" id="abstract" cols="30"
+          rows="10">钢轨轨头踏面在车轮循环荷载作用下易出现滚动接触疲劳裂纹、剥离掉块、波磨等伤损，影响行车舒适安全。传统的人工目测、采样抽检、主观定性的事后被动应激检修方式，无法为智慧工务提供全线路数字化、自动化的养护维修决策依据。近年来，深度学习使得针对轨面目标的细粒度图像识别成为可能，即对每一处伤损独立区分、精细分类、定量识别，实现毫米级尺寸测量和米级经纬度定位。但尚缺乏能够驱动高性能深度学习算法训练的高质量轨面伤损图像数据集。本文结合钢轨工务和计算机视觉，提出轨面伤损细粒度图像识别与智能评价流程，包含目标检测数据集、目标检测算法、视觉测量与量化评价、多尺度数据分析与地图可视化、边缘计算终端和云端部署应用。</textarea>
         {% endif %}
       </div>
       <div class="col flex-col">
-        <button type="submit">生成标题<svg t="1641714308353" class="icon" viewBox="0 0 1024 1024" version="1.1"
+        <button id="submit" type="submit">生成标题<svg t="1641714308353" class="icon" viewBox="0 0 1024 1024" version="1.1"
             xmlns="http://www.w3.org/2000/svg" p-id="2125" width="200" height="200">
             <path
               d="M633.728 172.928a25.6 25.6 0 0 1 18.112 7.488l313.408 313.472a25.6 25.6 0 0 1 0 36.224l-313.408 313.408a25.6 25.6 0 0 1-36.224-36.224l295.296-295.36-295.296-295.36a25.6 25.6 0 0 1 18.112-43.712z"
@@ -152,7 +164,7 @@
         {% if title %}
         <textarea name="title" id="title" cols="30" rows="10" disabled>{{title}}</textarea>
         {% else %}
-        <textarea name="title" id="title" cols="30" rows="10" disabled></textarea>
+        <textarea name="title" id="title" cols="30" rows="10" disabled>基于深度学习的轨面细粒度图像识别与智能评价流程</textarea>
         {% endif %}
       </div>
     </div>
@@ -164,7 +176,15 @@
       <p>数据集、代码、资料下载：公众号 人工智能小技巧 回复 文心雕龙</p>
     </div>
   </form>
-  <script></script>
+  <script>
+    const form = document.getElementById("form");
+    const submitButton = document.getElementById("submit");
+    form.onsubmit = () => {
+      submitButton.innerText = "请稍等片刻";
+      submitButton.setAttribute("disabled", true);
+      return true;
+    }
+  </script>
 </body>
 
 </html>
