@@ -65,6 +65,7 @@
       margin-right: 4em;
     }
 
+
     textarea {
       margin-top: 1em;
       border-radius: 0.2em;
@@ -77,8 +78,21 @@
       resize: none;
     }
 
+    .abstract-wrapper {
+      position: relative;
+    }
+
     #abstract {
       border: 1px solid #6c757d;
+
+    }
+
+    #counter {
+      position: absolute;
+      bottom: 0.5em;
+      right: 0.5em;
+      font-size: 0.8em;
+      color: #007bf1;
     }
 
     #title {
@@ -140,14 +154,15 @@
       </div>
     </div>
     <div class="row content">
-      <div class="col flex-col">
+      <div class="col flex-col abstract-wrapper">
         <label for="abstract">论文摘要</label>
         {% if abstract %}
-        <textarea name="abstract" id="abstract" cols="30" rows="10">{{abstract}}</textarea>
+        <textarea name="abstract" id="abstract" cols="30" rows="10" maxlength="512">{{abstract}}</textarea>
         {% else %}
-        <textarea name="abstract" id="abstract" cols="30"
-          rows="10">钢轨轨头踏面在车轮循环荷载作用下易出现滚动接触疲劳裂纹、剥离掉块、波磨等伤损，影响行车舒适安全。传统的人工目测、采样抽检、主观定性的事后被动应激检修方式，无法为智慧工务提供全线路数字化、自动化的养护维修决策依据。近年来，深度学习使得针对轨面目标的细粒度图像识别成为可能，即对每一处伤损独立区分、精细分类、定量识别，实现毫米级尺寸测量和米级经纬度定位。但尚缺乏能够驱动高性能深度学习算法训练的高质量轨面伤损图像数据集。本文结合钢轨工务和计算机视觉，提出轨面伤损细粒度图像识别与智能评价流程，包含目标检测数据集、目标检测算法、视觉测量与量化评价、多尺度数据分析与地图可视化、边缘计算终端和云端部署应用。</textarea>
+        <textarea name="abstract" id="abstract" cols="30" rows="10"
+          maxlength="512">钢轨轨头踏面在车轮循环荷载作用下易出现滚动接触疲劳裂纹、剥离掉块、波磨等伤损，影响行车舒适安全。传统的人工目测、采样抽检、主观定性的事后被动应激检修方式，无法为智慧工务提供全线路数字化、自动化的养护维修决策依据。近年来，深度学习使得针对轨面目标的细粒度图像识别成为可能，即对每一处伤损独立区分、精细分类、定量识别，实现毫米级尺寸测量和米级经纬度定位。但尚缺乏能够驱动高性能深度学习算法训练的高质量轨面伤损图像数据集。本文结合钢轨工务和计算机视觉，提出轨面伤损细粒度图像识别与智能评价流程，包含目标检测数据集、目标检测算法、视觉测量与量化评价、多尺度数据分析与地图可视化、边缘计算终端和云端部署应用。</textarea>
         {% endif %}
+        <span id="counter">0/512</span>
       </div>
       <div class="col flex-col">
         <button id="submit" type="submit">生成标题<svg t="1641714308353" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -180,6 +195,18 @@
     const form = document.getElementById("form");
     const submitButton = document.getElementById("submit");
     const abstract = document.getElementById("abstract");
+    const counter = document.getElementById("counter");
+
+    const getAbstractLen = () => {
+      const len = abstract.value.length;
+      counter.innerText = `${len}/512`
+    }
+
+    getAbstractLen();
+
+    abstract.oninput = () => {
+      getAbstractLen();
+    }
     form.onsubmit = () => {
       if (abstract.value.length > 512) {
         alert("摘要不能超过512字");
