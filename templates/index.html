@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI论文标题自动生成</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .container {
+      width: 100vw;
+      display: flex;
+    }
+
+    .row {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .col {
+      display: flex;
+    }
+
+    .flex-col {
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    header,
+    .config {
+      background-color: #343a40;
+      color: #fff;
+      box-sizing: border-box;
+      padding: 1em 0;
+    }
+
+    header {
+      width: 100%;
+      font-size: 2em;
+      text-align: center;
+    }
+
+    .config {
+      font-size: 1.2em;
+      margin-bottom: 2em;
+    }
+
+    input {
+      margin-left: 1em;
+      width: 280px;
+      box-sizing: border-box;
+      padding: 0 0.5em;
+      border-radius: 0.2em;
+    }
+
+    #API_KEY {
+      margin-right: 4em;
+    }
+
+    textarea {
+      margin-top: 1em;
+      border-radius: 0.2em;
+      width: 600px;
+      height: 300px;
+      box-sizing: border-box;
+      padding: 0.5em;
+      font-size: 1.2em;
+      line-height: 1.5em;
+    }
+
+    #abstract {
+      border: 1px solid #6c757d;
+    }
+
+    button {
+      width: 200px;
+      height: 60px;
+      background-color: #007bff;
+      color: #fff;
+      font-size: 1.2em;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 0 2em;
+    }
+
+    button:hover {
+      background-color: #007bf1;
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .desc {
+      margin-top: 2em;
+      line-height: 2em;
+      margin-top: 8em;
+    }
+  </style>
+</head>
+
+<body>
+  <form class="container flex-col" action="/text_gen" method="post">
+    <div class="row">
+      <header>自然语言处理黑科技：输入论文摘要，AI自动生成论文标题</header>
+    </div>
+    <div class="row config">
+      <div class="col">
+        <div class="col">
+          <label for="API_KEY">API KEY</label>
+          <input type="text" id="API_KEY" name="API_KEY" value="4IN5GqqXLGUZs3B84xEbo0kY">
+        </div>
+        <div class="col">
+          <label for="SECRET_KEY">SECRET KEY</label>
+          <input type="text" id="SECRET_KEY" name="SECRET_KEY" value="qo56M3OwFui4vVDaasmnPmbVcGm1ayat">
+        </div>
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col flex-col">
+        <label for="abstract">论文摘要</label>
+        {% if abstract %}
+        <textarea name="abstract" id="abstract" cols="30" rows="10">{{abstract}}</textarea>
+        {% else %}
+        <textarea name="abstract" id="abstract" cols="30" rows="10"></textarea>
+        {% endif %}
+      </div>
+      <div class="col flex-col">
+        <button type="submit">生成标题<svg t="1641714308353" class="icon" viewBox="0 0 1024 1024" version="1.1"
+            xmlns="http://www.w3.org/2000/svg" p-id="2125" width="200" height="200">
+            <path
+              d="M633.728 172.928a25.6 25.6 0 0 1 18.112 7.488l313.408 313.472a25.6 25.6 0 0 1 0 36.224l-313.408 313.408a25.6 25.6 0 0 1-36.224-36.224l295.296-295.36-295.296-295.36a25.6 25.6 0 0 1 18.112-43.712z"
+              p-id="2126" fill="#ffffff"></path>
+            <path d="M76.8 486.4h870.4a25.6 25.6 0 1 1 0 51.2H76.8a25.6 25.6 0 1 1 0-51.2z" p-id="2127" fill="#ffffff">
+            </path>
+          </svg></button>
+      </div>
+      <div class="col flex-col">
+        <label for="title">生成结果</label>
+        {% if title %}
+        <textarea name="title" id="title" cols="30" rows="10" disabled>{{title}}</textarea>
+        {% else %}
+        <textarea name="title" id="title" cols="30" rows="10" disabled></textarea>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row flex-col desc">
+      <p>自然语言处理黑科技：输入论文摘要，AI自动生成论文标题</p>
+      <p>算法原理：基于百度文心ERNIE3.0预训练大模型，在海量中文论文“摘要-标题”语料库上迁移学习泛化微调，实现自然语言创作。</p>
+      <p>部署流程：在百度智能云EasyDL中上传数据集、训练、校验模型，发布公有云在线服务，在前端网页调用API接口。兼容网页、APP、微信小程序。</p>
+      <p>教程：B站 同济子豪兄</p>
+      <p>数据集、代码、资料下载：公众号 人工智能小技巧 回复 文心雕龙</p>
+    </div>
+  </form>
+  <script></script>
+</body>
+
+</html>
