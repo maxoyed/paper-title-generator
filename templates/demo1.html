@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI论文标题自动生成</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <style>
     * {
       margin: 0;
@@ -254,17 +255,16 @@
       const xhr = new XMLHttpRequest();
       xhr.open("POST", "/text_gen", true);
       xhr.setRequestHeader('content-type', 'application/json');
+      xhr.responseType = "json";
       xhr.send(JSON.stringify(getPayload()));
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-          if (xhr.getResponseHeader('content-type') === 'application/json') {
-            const result = JSON.parse(xhr.responseText);
-            title.innerText = result.title;
-            setButtonDisabled(false);
-          } else {
-            console.log(xhr.responseText);
-          }
+      xhr.onload = () => {
+        if (xhr.status == 200) {
+          const result = xhr.response;
+          title.innerText = result.title;
         }
+      }
+      xhr.onloadend = () => {
+        setButtonDisabled(false);
       }
 
     }
