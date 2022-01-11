@@ -13,11 +13,11 @@ uwsgi --ini uwsgi.ini
 ## 停止
 
 ```shell
-cd uwsgi && uwsgi --stop uwsgi.pid
+uwsgi --stop uwsgi/uwsgi.pid
 ```
 
 ## 重启
 
 ```shell
-cd uwsgi && uwsgi --reload uwsgi.pid
+uwsgi --reload uwsgi/uwsgi.pid
 ```
