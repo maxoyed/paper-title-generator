@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, json, render_template, request, jsonify
 import requests
 
 app = Flask(__name__)
-EASYDL_TEXT_CLASSIFY_URL = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/text_gen/a2t_b"
 TOKEN_URL = 'https://aip.baidubce.com/oauth/2.0/token'
 
 
@@ -16,8 +15,8 @@ def get_access_token(API_KEY, SECRET_KEY):
     return res['access_token']
 
 
-def easydl_api(access_token, abstract):
-    url = EASYDL_TEXT_CLASSIFY_URL + "?access_token=" + access_token
+def easydl_api(access_token, abstract, API_URL):
+    url = API_URL + "?access_token=" + access_token
     print(url)
     text = "摘要：" + abstract + "标题："
     data = {'text': text, 'max_gen_len': 128}
@@ -26,21 +25,23 @@ def easydl_api(access_token, abstract):
     return res['result']['content']
 
 
-@app.route('/', methods=['GET'])
+@app.route('/demo1', methods=['GET'])
 def index():
-    return render_template('index.html')
+    return render_template('demo1.html')
 
 
 @app.route('/text_gen', methods=['POST'])
 def text_gen():
-    API_KEY = request.form["API_KEY"]
-    SECRET_KEY = request.form["SECRET_KEY"]
-    abstract = request.form["abstract"]
-    if abstract == '':
-        return render_template('index.html')
+    data = request.json
+    API_KEY = data["API_KEY"]
+    SECRET_KEY = data["SECRET_KEY"]
+    API_URL = data["API_URL"]
+    abstract = data["abstract"]
     access_token = get_access_token(API_KEY, SECRET_KEY)
-    title = easydl_api(access_token, abstract)
-    return render_template('index.html', title=title, abstract=abstract)
+    title = easydl_api(access_token, abstract, API_URL)
+    return jsonify({
+        "title": title
+    })
 
 
 if __name__ == '__main__':

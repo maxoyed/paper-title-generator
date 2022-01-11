@@ -53,16 +53,27 @@
       margin-bottom: 2em;
     }
 
-    input {
-      margin-left: 1em;
-      width: 280px;
-      box-sizing: border-box;
-      padding: 0 0.5em;
-      border-radius: 0.2em;
+    .config .col .col {
+      margin-right: 2em;
     }
 
     #API_KEY {
-      margin-right: 4em;
+      width: 205px;
+    }
+
+    #SECRET_KEY {
+      width: 280px;
+    }
+
+    #API_URL {
+      width: 380px;
+    }
+
+    input {
+      margin-left: 1em;
+      box-sizing: border-box;
+      padding: 0 0.5em;
+      border-radius: 0.2em;
     }
 
 
@@ -71,7 +82,6 @@
       border-radius: 0.2em;
       width: 580px;
       height: 280px;
-      /* box-sizing: border-box; */
       padding: 0.5em;
       font-size: 1.2em;
       line-height: 1.5em;
@@ -89,15 +99,26 @@
 
     #counter {
       position: absolute;
-      bottom: 0.5em;
+      bottom: 0.8em;
       right: 0.5em;
       font-size: 0.8em;
       color: #007bf1;
     }
 
     #title {
+      margin-top: 1em;
+      border-radius: 0.2em;
+      width: 580px;
+      height: 280px;
+      padding: 0.5em;
       text-align: center;
-      line-height: 280px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 2em;
+      font-weight: bold;
+      color: #55bd94;
+      background: #F5F5F5;
     }
 
     button {
@@ -137,7 +158,7 @@
 </head>
 
 <body>
-  <form id="form" class="container flex-col" action="/text_gen" method="post">
+  <div id="form" class="container flex-col" action="/text_gen" method="post">
     <div class="row">
       <header>自然语言处理黑科技：输入论文摘要，AI自动生成论文标题</header>
     </div>
@@ -151,22 +172,23 @@
           <label for="SECRET_KEY">SECRET KEY</label>
           <input type="text" id="SECRET_KEY" name="SECRET_KEY" value="qo56M3OwFui4vVDaasmnPmbVcGm1ayat">
         </div>
+        <div class="col">
+          <label for="API_URL">API URL</label>
+          <input type="text" id="API_URL" name="API_URL"
+            value="https://aip.baidubce.com/rpc/2.0/ai_custom/v1/text_gen/a2t_b">
+        </div>
       </div>
     </div>
     <div class="row content">
       <div class="col flex-col abstract-wrapper">
         <label for="abstract">论文摘要</label>
-        {% if abstract %}
-        <textarea name="abstract" id="abstract" cols="30" rows="10" maxlength="512">{{abstract}}</textarea>
-        {% else %}
         <textarea name="abstract" id="abstract" cols="30" rows="10"
-          maxlength="512">钢轨轨头踏面在车轮循环荷载作用下易出现滚动接触疲劳裂纹、剥离掉块、波磨等伤损，影响行车舒适安全。传统的人工目测、采样抽检、主观定性的事后被动应激检修方式，无法为智慧工务提供全线路数字化、自动化的养护维修决策依据。近年来，深度学习使得针对轨面目标的细粒度图像识别成为可能，即对每一处伤损独立区分、精细分类、定量识别，实现毫米级尺寸测量和米级经纬度定位。但尚缺乏能够驱动高性能深度学习算法训练的高质量轨面伤损图像数据集。本文结合钢轨工务和计算机视觉，提出轨面伤损细粒度图像识别与智能评价流程，包含目标检测数据集、目标检测算法、视觉测量与量化评价、多尺度数据分析与地图可视化、边缘计算终端和云端部署应用。</textarea>
-        {% endif %}
-        <span id="counter">0/512</span>
+          maxlength="350">钢轨轨头踏面在车轮循环荷载作用下易出现滚动接触疲劳裂纹、剥离掉块、波磨等伤损，影响行车舒适安全。传统的人工目测、采样抽检、主观定性的事后被动应激检修方式，无法为智慧工务提供全线路数字化、自动化的养护维修决策依据。近年来，深度学习使得针对轨面目标的细粒度图像识别成为可能，即对每一处伤损独立区分、精细分类、定量识别，实现毫米级尺寸测量和米级经纬度定位。但尚缺乏能够驱动高性能深度学习算法训练的高质量轨面伤损图像数据集。本文结合钢轨工务和计算机视觉，提出轨面伤损细粒度图像识别与智能评价流程，包含目标检测数据集、目标检测算法、视觉测量与量化评价、多尺度数据分析与地图可视化、边缘计算终端和云端部署应用。</textarea>
+        <span id="counter">0/350</span>
       </div>
       <div class="col flex-col">
-        <button id="submit" type="submit">生成标题<svg t="1641714308353" class="icon" viewBox="0 0 1024 1024" version="1.1"
-            xmlns="http://www.w3.org/2000/svg" p-id="2125" width="200" height="200">
+        <button id="submit" type="submit"><span>生成标题</span><svg t="1641714308353" class="icon" viewBox="0 0 1024 1024"
+            version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2125" width="200" height="200">
             <path
               d="M633.728 172.928a25.6 25.6 0 0 1 18.112 7.488l313.408 313.472a25.6 25.6 0 0 1 0 36.224l-313.408 313.408a25.6 25.6 0 0 1-36.224-36.224l295.296-295.36-295.296-295.36a25.6 25.6 0 0 1 18.112-43.712z"
               p-id="2126" fill="#ffffff"></path>
@@ -176,30 +198,50 @@
       </div>
       <div class="col flex-col">
         <label for="title">生成结果</label>
-        {% if title %}
-        <textarea name="title" id="title" cols="30" rows="10" disabled>{{title}}</textarea>
-        {% else %}
-        <textarea name="title" id="title" cols="30" rows="10" disabled>基于深度学习的轨面细粒度图像识别与智能评价流程</textarea>
-        {% endif %}
+        <div id="title">基于深度学习的轨面细粒度图像识别与智能评价流程</div>
       </div>
     </div>
     <div class="row flex-col desc">
       <p>自然语言处理黑科技：输入论文摘要，AI自动生成论文标题</p>
       <p>算法原理：基于百度文心ERNIE3.0预训练大模型，在海量中文论文“摘要-标题”语料库上迁移学习泛化微调，实现自然语言创作。</p>
       <p>部署流程：在百度智能云EasyDL中上传数据集、训练、校验模型，发布公有云在线服务，在前端网页调用API接口。兼容网页、APP、微信小程序。</p>
-      <p>教程：B站 同济子豪兄</p>
+      <p>教程：B站 <a href="https://space.bilibili.com/1900783" target="_blank">同济子豪兄</a></p>
       <p>数据集、代码、资料下载：公众号 人工智能小技巧 回复 文心雕龙</p>
     </div>
-  </form>
+  </div>
   <script>
-    const form = document.getElementById("form");
-    const submitButton = document.getElementById("submit");
+    const API_KEY = document.getElementById("API_KEY");
+    const SECRET_KEY = document.getElementById("SECRET_KEY");
+    const API_URL = document.getElementById("API_URL");
     const abstract = document.getElementById("abstract");
+    const title = document.getElementById("title");
+
+    const submitButton = document.getElementById("submit");
+    const submitButtonText = document.querySelector("#submit span");
     const counter = document.getElementById("counter");
+
+    const getPayload = () => {
+      return {
+        API_KEY: API_KEY.value,
+        SECRET_KEY: SECRET_KEY.value,
+        API_URL: API_URL.value,
+        abstract: abstract.value
+      }
+    }
 
     const getAbstractLen = () => {
       const len = abstract.value.length;
-      counter.innerText = `${len}/512`
+      counter.innerText = `${len}/350`
+    }
+
+    const setButtonDisabled = (flag) => {
+      if (flag) {
+        submitButtonText.innerText = "请稍等片刻";
+        submitButton.setAttribute("disabled", true);
+      } else {
+        submitButtonText.innerText = "生成标题";
+        submitButton.removeAttribute("disabled");
+      }
     }
 
     getAbstractLen();
@@ -207,14 +249,24 @@
     abstract.oninput = () => {
       getAbstractLen();
     }
-    form.onsubmit = () => {
-      if (abstract.value.length > 512) {
-        alert("摘要不能超过512字");
-        return false;
+    submitButton.onclick = () => {
+      setButtonDisabled(true);
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "/text_gen", true);
+      xhr.setRequestHeader('content-type', 'application/json');
+      xhr.send(JSON.stringify(getPayload()));
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+          if (xhr.getResponseHeader('content-type') === 'application/json') {
+            const result = JSON.parse(xhr.responseText);
+            title.innerText = result.title;
+            setButtonDisabled(false);
+          } else {
+            console.log(xhr.responseText);
+          }
+        }
       }
-      submitButton.innerText = "请稍等片刻";
-      submitButton.setAttribute("disabled", true);
-      return true;
+
     }
   </script>
 </body>
