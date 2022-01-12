@@ -94,9 +94,7 @@ submitButton.onclick = () => {
       const result = xhr.response;
       if (xhr.status == 200) {
         title.innerText = result.title;
-      } else if (xhr.status == 401) {
-        alert(result.msg);
-      } else if (xhr.status == 403) {
+      } else if (xhr.status == 401 || xhr.status == 403) {
         alert(result.msg);
       } else {
         alert("网络请求出现错误，请向网站管理员反馈");
