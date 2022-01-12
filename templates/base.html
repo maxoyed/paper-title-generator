@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}" />
+</head>
+
+<body>
+  <div id="form" class="container flex-col" action="/text_gen" method="post">
+    <div class="row">
+      <header>{{ self.title() }}</header>
+    </div>
+    <div class="row config">
+      <div class="col">
+        <div class="col">
+          <label for="API_KEY">API KEY</label>
+          <input type="text" id="API_KEY" name="API_KEY" value="{% block API_KEY %}{% endblock %}">
+        </div>
+        <div class="col">
+          <label for="SECRET_KEY">SECRET KEY</label>
+          <input type="text" id="SECRET_KEY" name="SECRET_KEY" value="{% block SECRET_KEY %}{% endblock %}">
+        </div>
+        <div class="col">
+          <label for="API_URL">API URL</label>
+          <input type="text" id="API_URL" name="API_URL" value="{% block API_URL %}{% endblock %}">
+        </div>
+      </div>
+    </div>
+    <div class="row content">
+      <div class="col flex-col abstract-wrapper">
+        <label for="abstract">论文摘要</label>
+        <textarea name="abstract" id="abstract" cols="30" rows="10"
+          maxlength="350">{% block abstract %}{% endblock %}</textarea>
+        <span id="counter">0/350</span>
+      </div>
+      <div class="col flex-col">
+        <button id="submit" type="submit"><span>生成标题</span><svg t="1641714308353" class="icon" viewBox="0 0 1024 1024"
+            version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2125" width="200" height="200">
+            <path
+              d="M633.728 172.928a25.6 25.6 0 0 1 18.112 7.488l313.408 313.472a25.6 25.6 0 0 1 0 36.224l-313.408 313.408a25.6 25.6 0 0 1-36.224-36.224l295.296-295.36-295.296-295.36a25.6 25.6 0 0 1 18.112-43.712z"
+              p-id="2126" fill="#ffffff"></path>
+            <path d="M76.8 486.4h870.4a25.6 25.6 0 1 1 0 51.2H76.8a25.6 25.6 0 1 1 0-51.2z" p-id="2127" fill="#ffffff">
+            </path>
+          </svg></button>
+      </div>
+      <div class="col flex-col">
+        <label for="title">生成结果</label>
+        <div id="title">{% block result %}{% endblock %}</div>
+      </div>
+    </div>
+    <div class="row flex-col desc">
+      <p>{{ self.title() }}</p>
+      <p>算法原理：{% block desc %}基于百度文心ERNIE3.0预训练大模型，在海量中文论文“摘要-标题”语料库上迁移学习泛化微调，实现自然语言创作。{% endblock %}</p>
+      <p>部署流程：在百度智能云EasyDL中上传数据集、训练、校验模型，发布公有云在线服务，在前端网页调用API接口。兼容网页、APP、微信小程序。</p>
+      <p>教程：B站 <a href="https://space.bilibili.com/1900783" target="_blank">同济子豪兄</a></p>
+      <p>数据集、代码、资料下载：公众号 人工智能小技巧 回复 文心雕龙</p>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+  {% block script %}
+  <script>
+    window.onload = () => {
+      init(false, true);
+    }
+  </script>
+  {% endblock %}
+</body>
+
+</html>

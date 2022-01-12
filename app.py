@@ -11,37 +11,59 @@ def get_access_token(API_KEY, SECRET_KEY):
         'client_id': API_KEY,
         'client_secret': SECRET_KEY
     }
-    res = requests.post(TOKEN_URL, data).json()
-    return res['access_token']
+    res = requests.post(TOKEN_URL, data)
+    # print(f"get access token res status_code: {res.status_code}")
+    # print(f"get access token res json: {res.json()}")
+    if res.status_code != 200:
+        return False
+    else:
+        return res.json()['access_token']
 
 
-def easydl_api(access_token, abstract, API_URL):
+def easydl_api(access_token, abstract, API_URL, with_prefix=False):
     url = API_URL + "?access_token=" + access_token
-    print(url)
-    text = "摘要：" + abstract + "标题："
+    text = abstract
+    if with_prefix:
+        text = "摘要：" + abstract + "标题："
     data = {'text': text, 'max_gen_len': 128}
-    res = requests.post(url, json=data).json()
-    print(res)
-    return res['result']['content']
+    try:
+        res = requests.post(url, json=data)
+        # print(f"easydl api res status_code: {res.status_code}")
+        # print(f"easydl api res json: {res.json()}")
+        return res.json()['result']['content']
+    except:
+        return False
 
 
+@app.route('/', methods=['GET'])
 @app.route('/demo1', methods=['GET'])
-def index():
+def demo1():
     return render_template('demo1.html')
+
+
+@app.route('/demo2', methods=['GET'])
+def demo2():
+    return render_template('demo2.html')
+
+
+@app.route('/demo3', methods=['GET'])
+def demo3():
+    return render_template('demo3.html')
 
 
 @app.route('/text_gen', methods=['POST'])
 def text_gen():
     data = request.json
-    API_KEY = data["API_KEY"]
-    SECRET_KEY = data["SECRET_KEY"]
-    API_URL = data["API_URL"]
-    abstract = data["abstract"]
-    access_token = get_access_token(API_KEY, SECRET_KEY)
-    title = easydl_api(access_token, abstract, API_URL)
-    return jsonify({
-        "title": title
-    })
+    access_token = get_access_token(data["API_KEY"], data["SECRET_KEY"])
+    if access_token:
+        title = easydl_api(access_token, data["abstract"], data["API_URL"],
+                           data["with_prefix"])
+        if title:
+            return jsonify({"title": title})
+        else:
+            return jsonify({"msg": "API URL 错误"}), 403
+    else:
+        return jsonify({"msg": "API KEY 或 SECRET KEY 错误"}), 401
 
 
 if __name__ == '__main__':

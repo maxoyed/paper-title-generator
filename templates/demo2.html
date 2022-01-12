@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% block title %}自然语言处理黑科技：输入论文摘要，AI自动生成论文标题{% endblock %}
-{% block API_KEY %}4IN5GqqXLGUZs3B84xEbo0kY{% endblock %}
-{% block SECRET_KEY %}qo56M3OwFui4vVDaasmnPmbVcGm1ayat{% endblock %}
-{% block API_URL %}https://aip.baidubce.com/rpc/2.0/ai_custom/v1/text_gen/a2t_b{% endblock %}
+{% block API_KEY %}UIukBfpay9BMDHXQ0wX9XMxj{% endblock %}
+{% block SECRET_KEY %}uE3pkPGkCW2gWXztTqgULX8Z0TVyv930{% endblock %}
+{% block API_URL %}https://aip.baidubce.com/rpc/2.0/ai_custom/v1/text_gen/a2t_c{% endblock %}
 {% block abstract
 %}钢轨轨头踏面在车轮循环荷载作用下易出现滚动接触疲劳裂纹、剥离掉块、波磨等伤损，影响行车舒适安全。传统的人工目测、采样抽检、主观定性的事后被动应激检修方式，无法为智慧工务提供全线路数字化、自动化的养护维修决策依据。近年来，深度学习使得针对轨面目标的细粒度图像识别成为可能，即对每一处伤损独立区分、精细分类、定量识别，实现毫米级尺寸测量和米级经纬度定位。但尚缺乏能够驱动高性能深度学习算法训练的高质量轨面伤损图像数据集。本文结合钢轨工务和计算机视觉，提出轨面伤损细粒度图像识别与智能评价流程，包含目标检测数据集、目标检测算法、视觉测量与量化评价、多尺度数据分析与地图可视化、边缘计算终端和云端部署应用。{%
 endblock %}
-{% block result %}基于深度学习的轨面细粒度图像识别与智能评价流程{% endblock %}
+{% block result %}标题：钢轨轨面伤损细粒度图像识别与智能评价{% endblock %}
 {% block desc %}{{ super() }}{% endblock %}
 {% block script %}
 <script>
   window.onload = () => {
-    init(false, true);
+    init(false, false);
   }
 </script>
 {% endblock %}
